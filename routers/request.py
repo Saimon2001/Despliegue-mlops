@@ -18,7 +18,7 @@ router = APIRouter()
 def predict(request: DataPredict):
     try:
         list_data = request.data_to_predict
-        df_data = DataFrame(list_data, columns=['age', 'sex', 'bmi', 'children', 'smoker', 'region'])
+        df_data = DataFrame(list_data, columns=['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach','exang', 'oldpeak', 'slope', 'ca', 'thal'])
 
         prediction = model.predict(df_data)
 
@@ -26,7 +26,7 @@ def predict(request: DataPredict):
         prediction_bytes = prediction_str.encode('utf-8')
         file_like_object = BytesIO(prediction_bytes)
 
-        s3_key = 'predictions/prediction.txt'
+        s3_key = 'predictions/prediction1.txt'
 
         s3.upload_fileobj(file_like_object, S3_BUCKET_NAME, s3_key)
 
